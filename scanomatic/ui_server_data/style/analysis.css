@@ -1,0 +1,46 @@
+.onoffswitch.one_time_positioning {
+    position: relative; width: 350px;
+}
+
+.onoffswitch-inner.one_time_positioning:after {
+    content: "One Time Positioning (default)" !important;
+}
+.onoffswitch-inner.one_time_positioning:before {
+    content: "Dynamic Positioning" !important;
+}
+
+.onoffswitch-switch.one_time_positioning {
+    position: absolute; top: 0; bottom: 0; right: 316px;
+}
+
+.plate-offset {
+    width: 40px;
+    margin-right: 6px;
+}
+
+.grid_icon {
+    display: block;
+    float: right;
+    margin: 3px;
+}
+
+.plate-regridding {
+    margin: 2px;
+    padding: 3px;
+    background: #e7d2b7;
+    color: #541f0f;
+    display: inline-block;
+}
+
+.plate-regridding legend {
+    display: inline-block;
+}
+
+#manual-regridding-image {
+    position: absolute;
+    left: 10px;
+    bottom: 330px;
+    width: 480px;
+    height: 320px;
+    display: block;
+}

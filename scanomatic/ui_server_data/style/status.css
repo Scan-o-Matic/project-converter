@@ -1,0 +1,50 @@
+.scanner {
+    display: inline-block;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    box-shadow: 5px 5px 15px #541f0f;
+    padding: 6px;
+    background: url("/images/scanner.png") no-repeat right bottom;
+}
+
+.job {
+    margin-bottom: 12px;
+    box-shadow: 5px 5px 15px #541f0f;
+    padding: 6px;
+    position: relative;
+    margin-right: 45px;
+}
+
+.queue {
+    margin-bottom: 12px;
+    box-shadow: 5px 5px 15px #541f0f;
+    padding: 6px;
+    position: relative;
+    margin-right: 45px;
+
+}
+
+.stop-button {
+    background: url("/images/stop.png") no-repeat center center;
+    background-size: contain;
+    height: 2em;
+    width: 30px;
+    position: absolute;
+    top: 2px;
+    right: -39px;
+    cursor: pointer;
+}
+
+.log-link {
+    float: right
+}
+
+.log-link a {
+    padding-bottom: 2px;
+    padding-top: 1px;
+}
+
+img {
+    vertical-align: middle;
+    float: none;
+}

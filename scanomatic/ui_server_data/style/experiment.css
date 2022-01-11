@@ -1,0 +1,54 @@
+/* colors
+#541f0f
+#f8e03e
+#cd8b34
+#a45e60
+#e7d2b7
+
+*/
+
+tr {
+    margin-bottom: 6px;
+}
+
+.eventable td {
+ width: 16%;
+}
+
+.head-col {
+    vertical-align: top;
+}
+
+.block {
+    display: inline-block;
+    vertical-align: center;
+}
+
+option {
+    padding: 3px;
+    margin-right: 3px;
+}
+
+#cont h1 {
+}
+
+#cont em {
+}
+
+textarea {
+    width: 80%;
+    min-height: 75px;
+}
+
+.section {
+    margin-bottom: 6px;
+}
+
+#pinnings div {
+    display: inline-block;
+    padding: 6px;
+}
+
+.plate-description {
+    margin-bottom: 3px;
+}

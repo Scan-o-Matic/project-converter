@@ -1,0 +1,11 @@
+canvas {
+/*
+    width: 700px;
+    height: 600px;*/
+    background-color: #e7d2b7;
+}
+
+#new-fixture-markers {
+    width: 50px;
+    padding: 2px;
+}
