@@ -1,4 +1,4 @@
-# Scan-o-matic project converted
+# Scan-o-matic project converter
 
 1. Place all projects you wish to migrate in `/tmp/SoM/`
 
