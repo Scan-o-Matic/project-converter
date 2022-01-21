@@ -1,18 +1,19 @@
 #!/usr/bin/env python
+from collections import namedtuple
 import os
 import fnmatch
 import json
 
 import numpy as np
 
+from scanomatic.data_processing.phenotypes import PhenotypeDataType
 from scanomatic.io import jsonizer
+from scanomatic.io.paths import Paths
+from scanomatic.io.logger import Logger
 from scanomatic.models.factories.compile_project_factory import (
     CompileImageAnalysisFactory,
     CompileProjectFactory,
 )
-from scanomatic.io.paths import Paths
-from scanomatic.io.logger import Logger
-
 
 
 def find_files(directory, pattern):
@@ -38,13 +39,14 @@ def get_dump_name(filename, extension):
 logger = Logger('Converter')
 BASE_DIR = '/projects'
 paths = Paths()
+TypedParameter = namedtuple("TypedParameter", ["name", "processor"])
 PHENOTYPE_PARAMS = (
-    "median_kernel_size",
-    "gauss_filter_sigma",
-    "linear_regression_size",
-    "phenotypes_inclusion",
-    "no_growth_monotonicity_threshold",
-    "no_growth_pop_doublings_threshold",
+    TypedParameter("median_kernel_size", int),
+    TypedParameter("gauss_filter_sigma", float),
+    TypedParameter("linear_regression_size", int),
+    TypedParameter("phenotypes_inclusion", lambda x: PhenotypeDataType[x]),
+    TypedParameter("no_growth_monotonicity_threshold", float),
+    TypedParameter("no_growth_pop_doublings_threshold", float),
 )
 
 for file_type, pattern, loader, processor, new_ext in (
@@ -67,7 +69,7 @@ for file_type, pattern, loader, processor, new_ext in (
         paths.phenotypes_extraction_params,
         np.load,
         lambda data: {
-            PHENOTYPE_PARAMS[i]: p
+            PHENOTYPE_PARAMS[i].name: PHENOTYPE_PARAMS[i].processor(p)
             for i, p in enumerate(data)
         },
         ".json",
