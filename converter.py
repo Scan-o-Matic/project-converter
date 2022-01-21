@@ -2,6 +2,9 @@
 import os
 import fnmatch
 import json
+
+import numpy as np
+
 from scanomatic.io import jsonizer
 from scanomatic.models.factories.compile_project_factory import (
     CompileImageAnalysisFactory,
@@ -20,23 +23,55 @@ def find_files(directory, pattern):
                 yield filename
 
 
+def get_dump_name(filename, extension):
+    if extension is None:
+        return filename
+    else:
+        split_name = os.path.basename(filename).split('.')
+        if len(split_name) > 1:
+            new_basename = '.'.join(split_name[:-1]) + extension
+        else:
+            new_basename = split_name[0] + extension
+        return os.path.join(os.path.dirname(fname), new_basename)
+
+
 logger = Logger('Converter')
 BASE_DIR = '/projects'
 paths = Paths()
+PHENOTYPE_PARAMS = (
+    "median_kernel_size",
+    "gauss_filter_sigma",
+    "linear_regression_size",
+    "phenotypes_inclusion",
+    "no_growth_monotonicity_threshold",
+    "no_growth_pop_doublings_threshold",
+)
 
-for file_type, pattern, loader, processor in (
+for file_type, pattern, loader, processor, new_ext in (
     (
         'project compilations',
         paths.project_compilation_pattern.format('*'),
         CompileImageAnalysisFactory.serializer.load,
         lambda data: sorted(data, key=lambda e: e.image.index),
+        None,
     ),
     (
         'project compilation instructions',
         paths.project_compilation_instructions_pattern.format('*'),
         CompileProjectFactory.serializer.load_first,
         None,
+        None,
     ),
+    (
+        'phenotypes extraction parameters',
+        paths.phenotypes_extraction_params,
+        np.load,
+        lambda data: {
+            PHENOTYPE_PARAMS[i]: p
+            for i, p in enumerate(data)
+        },
+        ".json",
+    )
 ):
     logger.info('Converting all {} in {}'.format(file_type, BASE_DIR))
     n = 0
@@ -60,6 +95,6 @@ for file_type, pattern, loader, processor in (
             fname,
             len(data) if isinstance(data, list) else 1,
         ))
-        jsonizer.dump(data, fname)
+        jsonizer.dump(data, get_dump_name(fname, new_ext))
         n += 1
     logger.info('Converted {} {} files'.format(n, file_type))
