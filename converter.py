@@ -42,7 +42,7 @@ paths = Paths()
 TypedParameter = namedtuple("TypedParameter", ["name", "processor"])
 PHENOTYPE_PARAMS = (
     TypedParameter("median_kernel_size", int),
-    TypedParameter("gauss_filter_sigma", float),
+    TypedParameter("gaussian_filter_sigma", float),
     TypedParameter("linear_regression_size", int),
     TypedParameter("phenotypes_inclusion", lambda x: PhenotypeDataType[x]),
     TypedParameter("no_growth_monotonicity_threshold", float),
