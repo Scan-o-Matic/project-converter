@@ -14,6 +14,7 @@ from scanomatic.models.factories.compile_project_factory import (
     CompileImageAnalysisFactory,
     CompileProjectFactory,
 )
+from scanomatic.models.factories.scanning_factory import ScanningModelFactory
 
 
 def find_files(directory, pattern):
@@ -73,6 +74,13 @@ for file_type, pattern, loader, processor, new_ext in (
             for i, p in enumerate(data)
         },
         ".json",
+    ),
+    (
+        'phenotypes extraction parameters',
+        paths.scan_project_file_pattern.format('*'),
+        ScanningModelFactory.serializer.load_first,
+        None,
+        None,
     )
 ):
     logger.info('Converting all {} in {}'.format(file_type, BASE_DIR))
