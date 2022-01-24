@@ -15,10 +15,11 @@ from scanomatic.models.factories.compile_project_factory import (
     CompileProjectFactory,
 )
 from scanomatic.models.factories.fixture_factories import FixtureFactory
+from scanomatic.models.factories.scanning_factory import ScanningModelFactory
 
 
 def find_files(directory, pattern):
-    for root, dirs, files in os.walk(directory):
+    for root, _, files in os.walk(directory):
         for basename in files:
             if fnmatch.fnmatch(basename, pattern):
                 filename = os.path.join(root, basename)
@@ -82,6 +83,12 @@ for file_type, pattern, loader, processor, new_ext in (
         None,
         None,
     ),
+        'scan project file',
+        paths.scan_project_file_pattern.format('*'),
+        ScanningModelFactory.serializer.load_first,
+        None,
+        None,
+    )
 ):
     logger.info('Converting all {} in {}'.format(file_type, BASE_DIR))
     n = 0
@@ -103,13 +110,15 @@ for file_type, pattern, loader, processor, new_ext in (
             data = processor(data)
         logger.info('Converting {} ({} entries)'.format(
             fname,
-            len(data) if isinstance(data, list) else 1,
+            len(data) if isinstance(data, list) else int(data is not None),
         ))
+        if data is None:
+            logger.error('Found nothing to convert in {}'.format(fname))
+            continue
 
         dump_name = get_dump_name(fname, new_ext)
         jsonizer.dump(data, get_dump_name(fname, new_ext))
         if dump_name != fname:
             os.remove(fname)
-
         n += 1
     logger.info('Converted {} {} files'.format(n, file_type))

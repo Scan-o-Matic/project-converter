@@ -434,6 +434,14 @@ class ScanningModelFactory(AbstractModelFactory):
             return True
         return model.FIELD_TYPES.auxillary_info
 
+    @classmethod
+    def all_keys_valid(cls, keys):
+        expected = set(cls.default_model.keys())
+        got = set(keys) - {'project_tag', 'scanner_tag'}
+        return (
+            expected.issuperset(got)
+            and len(expected.intersection(got)) > 0
+        )
 
 class ScannerOwnerFactory(AbstractModelFactory):
 
