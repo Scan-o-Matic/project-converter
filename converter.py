@@ -51,7 +51,7 @@ PHENOTYPE_PARAMS = (
 )
 
 for file_type, pattern, loader, processor, new_ext in (
-    (
+     (
         'project compilations',
         paths.project_compilation_pattern.format('*'),
         CompileImageAnalysisFactory.serializer.load,
@@ -113,3 +113,5 @@ for file_type, pattern, loader, processor, new_ext in (
 
         n += 1
     logger.info('Converted {} {} files'.format(n, file_type))
+
+
