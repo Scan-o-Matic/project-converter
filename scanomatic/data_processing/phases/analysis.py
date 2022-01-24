@@ -1,7 +1,5 @@
 import numpy as np
 from enum import Enum
-from scipy.ndimage import label
-from scipy.stats import linregress
 
 from scanomatic.data_processing import growth_phenotypes
 
@@ -102,39 +100,7 @@ def get_phenotypes_tuple(phase):
 
 
 def _phenotype_phases(model, doublings):
-
-    phenotypes = []
-
-    # noinspection PyTypeChecker
-    for phase in CurvePhases:
-
-        labels, label_count = label(model.phases == phase.value)
-        for id_label in range(1, label_count + 1):
-
-            if is_undetermined(phase):
-                phenotypes.append((phase, None))
-                continue
-
-            filt = labels == id_label
-            left, right = _locate_segment(filt)
-            time_right = model.times[right - 1]
-            time_left = model.times[left]
-            current_phase_phenotypes = {}
-
-            if is_detected_non_linear(phase):
-
-                assign_non_linear_phase_phenotypes(current_phase_phenotypes, model, left, right, time_left, time_right)
-
-            elif is_detected_linear(phase):
-
-                assign_linear_phase_phenotypes(current_phase_phenotypes, model, filt)
-
-            assign_common_phase_phenotypes(current_phase_phenotypes, model, left, right)
-
-            phenotypes.append((phase, current_phase_phenotypes))
-
-    # Phenotypes sorted on phase start rather than type of phase
-    return sorted(phenotypes, key=lambda (t, p): p[CurvePhasePhenotypes.Start] if p is not None else 9999)
+    raise NotImplementedError("This has been removed to keep the converter minimal.")
 
 
 def assign_common_phase_phenotypes(current_phase_phenotypes, model, left, right):
@@ -174,10 +140,7 @@ def assign_common_phase_phenotypes(current_phase_phenotypes, model, left, right)
 
 def assign_linear_phase_phenotypes(current_phase_phenotypes, model, filt):
     # B. For linear phases get the doubling time
-    slope, intercept, _, _, _ = linregress(model.times[filt], model.log2_curve[filt])
-    current_phase_phenotypes[CurvePhasePhenotypes.PopulationDoublingTime] = 1 / slope
-    current_phase_phenotypes[CurvePhasePhenotypes.LinearModelSlope] = slope
-    current_phase_phenotypes[CurvePhasePhenotypes.LinearModelIntercept] = intercept
+    raise NotImplementedError("This has been removed to keep the converter minimal.")
 
 
 def assign_non_linear_phase_phenotypes(current_phase_phenotypes, model, left, right, time_left, time_right):
@@ -217,14 +180,8 @@ def _locate_segment(filt):  # -> (int, int)
     Returns:
         Left and exclusive right indices of filter
     """
-    labels, n = label(filt)
-    if n == 1:
-        where = np.where(labels == 1)[0]
-        return where[0], where[-1] + 1
-    elif n > 1:
-        raise ValueError("Filter is not homogeneous, contains {0} segments ({1})".format(n, labels.tolist()))
-    else:
-        return None, None
+    raise NotImplementedError("This has been removed to keep the converter minimal.")
+    
 
 
 def get_phase_analysis(phenotyper_object, plate, pos, thresholds=None, experiment_doublings=None):

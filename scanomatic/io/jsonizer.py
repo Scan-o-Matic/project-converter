@@ -4,6 +4,7 @@ from enum import Enum, unique
 
 import numpy as np
 
+from scanomatic.data_processing.phenotypes import PhenotypeDataType
 from scanomatic.generics.model import Model, assert_models_deeply_equal
 from scanomatic.io.power_manager import POWER_MANAGER_TYPE, POWER_MODES
 from scanomatic.models.analysis_model import COMPARTMENTS, MEASURES, VALUES
@@ -138,6 +139,7 @@ ENUM_CLASSES = {
     "CULTURE_SOURCE": CULTURE_SOURCE,
     "POWER_MANAGER_TYPE": POWER_MANAGER_TYPE,
     "POWER_MODES": POWER_MODES,
+    "PhenotypeDataType": PhenotypeDataType,
 }
 
 
