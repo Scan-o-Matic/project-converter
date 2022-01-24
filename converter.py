@@ -51,7 +51,7 @@ PHENOTYPE_PARAMS = (
 )
 
 for file_type, pattern, loader, processor, new_ext in (
-     (
+    (
         'project compilations',
         paths.project_compilation_pattern.format('*'),
         CompileImageAnalysisFactory.serializer.load,
@@ -80,7 +80,7 @@ for file_type, pattern, loader, processor, new_ext in (
         paths.experiment_local_fixturename,
         FixtureFactory.serializer.load_first,
         None,
-        ".json",
+        None,
     ),
 ):
     logger.info('Converting all {} in {}'.format(file_type, BASE_DIR))
@@ -113,5 +113,3 @@ for file_type, pattern, loader, processor, new_ext in (
 
         n += 1
     logger.info('Converted {} {} files'.format(n, file_type))
-
-
