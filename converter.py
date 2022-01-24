@@ -18,7 +18,7 @@ from scanomatic.models.factories.scanning_factory import ScanningModelFactory
 
 
 def find_files(directory, pattern):
-    for root, dirs, files in os.walk(directory):
+    for root, _, files in os.walk(directory):
         for basename in files:
             if fnmatch.fnmatch(basename, pattern):
                 filename = os.path.join(root, basename)
@@ -103,7 +103,7 @@ for file_type, pattern, loader, processor, new_ext in (
             data = processor(data)
         logger.info('Converting {} ({} entries)'.format(
             fname,
-            len(data) if isinstance(data, list) else 1,
+            len(data) if isinstance(data, list) else int(data is not None),
         ))
 
         dump_name = get_dump_name(fname, new_ext)
