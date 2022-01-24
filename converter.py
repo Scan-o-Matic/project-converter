@@ -14,6 +14,7 @@ from scanomatic.models.factories.compile_project_factory import (
     CompileImageAnalysisFactory,
     CompileProjectFactory,
 )
+from scanomatic.models.factories.fixture_factories import FixtureFactory
 
 
 def find_files(directory, pattern):
@@ -73,7 +74,14 @@ for file_type, pattern, loader, processor, new_ext in (
             for i, p in enumerate(data)
         },
         ".json",
-    )
+    ),
+    (
+        'local fixture config',
+        paths.experiment_local_fixturename,
+        FixtureFactory.serializer.load_first,
+        None,
+        ".json",
+    ),
 ):
     logger.info('Converting all {} in {}'.format(file_type, BASE_DIR))
     n = 0
