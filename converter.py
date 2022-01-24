@@ -97,6 +97,11 @@ for file_type, pattern, loader, processor, new_ext in (
             fname,
             len(data) if isinstance(data, list) else 1,
         ))
+
+        dump_name = get_dump_name(fname, new_ext)
         jsonizer.dump(data, get_dump_name(fname, new_ext))
+        if dump_name != fname:
+            os.remove(fname)
+
         n += 1
     logger.info('Converted {} {} files'.format(n, file_type))
