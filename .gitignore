@@ -10,6 +10,7 @@
 .coverage
 ../*
 _*.lock
+*.orig
 .git/*
 .ropeproject
 .cache
