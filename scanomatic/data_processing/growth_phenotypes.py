@@ -1,15 +1,13 @@
 from enum import Enum
 import numpy as np
-from scipy.optimize import leastsq
 from itertools import izip
-from scipy.stats import linregress
 from scanomatic.io.logger import Logger
 
 _logger = Logger("Growth Phenotypes")
 
 
 def _linreg_helper(X, Y):
-    return linregress(X, Y)[0::4]
+    raise NotImplementedError("This has been removed to keep the converter minimal.")
 
 
 def get_derivative(curve_strided, times_strided):
@@ -182,22 +180,7 @@ def get_chapman_richards_4parameter_extended_curve(x_data, b0, b1, b2, b3, d):
 def get_fit_r_square(x_data, y_data, p0=np.array([1.64, -0.1, -2.46, 0.1, 15.18], dtype=np.float)):
     """x_data and y_data must be 1D, y_data must be log2"""
 
-    finite_y = np.isfinite(y_data)
-    x_data = x_data[finite_y]
-    y_data = y_data[finite_y]
-
-    try:
-        p = leastsq(get_chapman_richards_residuals, p0, args=(x_data, y_data))[0]
-    except TypeError:
-        return np.inf, p0
-
-    y_hat_vector = get_chapman_richards_4parameter_extended_curve(x_data, *p)
-
-    if y_data.any():
-        return (1.0 - np.square(y_hat_vector - y_data).sum() /
-                np.square(y_hat_vector - y_data.mean()).sum()), p
-    else:
-        return np.nan, p
+    raise NotImplementedError("This has been removed to keep the converter minimal.")
 
 
 def get_chapman_richards_residuals(cr_params, x_data, y_data):
