@@ -76,7 +76,7 @@ for file_type, pattern, loader, processor, new_ext in (
         ".json",
     ),
     (
-        'phenotypes extraction parameters',
+        'scan project file',
         paths.scan_project_file_pattern.format('*'),
         ScanningModelFactory.serializer.load_first,
         None,
