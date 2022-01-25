@@ -14,6 +14,7 @@ from scanomatic.models.factories.compile_project_factory import (
     CompileImageAnalysisFactory,
     CompileProjectFactory,
 )
+from scanomatic.models.factories.fixture_factories import FixtureFactory
 from scanomatic.models.factories.scanning_factory import ScanningModelFactory
 
 
@@ -76,12 +77,19 @@ for file_type, pattern, loader, processor, new_ext in (
         ".json",
     ),
     (
+        'local fixture config',
+        paths.experiment_local_fixturename,
+        FixtureFactory.serializer.load_first,
+        None,
+        None,
+    ),
+    (
         'scan project file',
         paths.scan_project_file_pattern.format('*'),
         ScanningModelFactory.serializer.load_first,
         None,
         None,
-    )
+    ),
 ):
     logger.info('Converting all {} in {}'.format(file_type, BASE_DIR))
     n = 0
