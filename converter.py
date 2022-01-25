@@ -70,8 +70,11 @@ for file_type, pattern, loader, processor, new_ext in (
         paths.phenotypes_extraction_params,
         np.load,
         lambda data: {
-            PHENOTYPE_PARAMS[i].name: PHENOTYPE_PARAMS[i].processor(p)
-            for i, p in enumerate(data)
+            "__DATACLASS__": "PhenotyperSettings",
+            "__CONTENT__": {
+                PHENOTYPE_PARAMS[i].name: PHENOTYPE_PARAMS[i].processor(p)
+                for i, p in enumerate(data)
+            },
         },
         ".json",
     ),
