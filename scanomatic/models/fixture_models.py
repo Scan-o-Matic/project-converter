@@ -40,7 +40,7 @@ class FixtureModel(model.Model):
         self.shape = shape
         self.coordinates_scale = coordinates_scale
         self.plates = plates
-        self.orentation_mark_path = orientation_mark_path
+        self.orientation_mark_path = orientation_mark_path
         self.scale = scale
 
         super(FixtureModel, self).__init__()

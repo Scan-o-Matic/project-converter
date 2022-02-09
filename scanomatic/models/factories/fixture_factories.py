@@ -91,11 +91,11 @@ class FixtureFactory(AbstractModelFactory):
         for (old_name, new_name) in [("grayscale_indices", "grayscale_targets"),
                                      ("mark_X", "orientation_marks_x"),
                                      ("mark_Y", "orientation_marks_y"),
+                                     ("orentation_mark_path", "orientation_mark_path"),
                                      ("Image Shape", "shape"), ("Scale", "coordinates_scale"),
                                      ("File", "path"), ("Time", "time")]:
 
             rename_setting(settings, old_name, new_name)
-
         if "plates" not in settings or not settings["plates"]:
             settings["plates"] = []
 

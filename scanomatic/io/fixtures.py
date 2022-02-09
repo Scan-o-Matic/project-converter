@@ -66,9 +66,9 @@ class FixtureSettings(object):
 
         paths = Paths()
 
-        if self.model.orentation_mark_path:
-            marker_paths = (self.model.orentation_mark_path,
-                         os.path.join(paths.images, os.path.basename(self.model.orentation_mark_path)),
+        if self.model.orientation_mark_path:
+            marker_paths = (self.model.orientation_mark_path,
+                         os.path.join(paths.images, os.path.basename(self.model.orientation_mark_path)),
                          paths.marker)
         else:
             marker_paths = (paths.marker,)
